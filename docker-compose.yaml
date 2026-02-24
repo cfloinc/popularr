@@ -1,0 +1,22 @@
+# Example docker-compose.yaml for Popularr
+# Copy this and fill in your API keys
+services:
+  popularr:
+    build: ./backend
+    # Or use: image: popularr/popularr:latest
+    container_name: popularr
+    ports:
+      - "7879:7879"
+    environment:
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - SONARR_URL=${SONARR_URL:-http://sonarr:8989}
+      - SONARR_API_KEY=${SONARR_API_KEY}
+      - RADARR_URL=${RADARR_URL:-http://radarr:7878}
+      - RADARR_API_KEY=${RADARR_API_KEY}
+      - WEB_PASSWORD=${WEB_PASSWORD:-}
+    volumes:
+      - popularr-data:/data
+    restart: unless-stopped
+
+volumes:
+  popularr-data:
